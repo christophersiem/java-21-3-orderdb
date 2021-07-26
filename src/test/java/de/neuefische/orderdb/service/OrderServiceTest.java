@@ -62,4 +62,10 @@ class OrderServiceTest {
         }
     }
 
+    @Test
+    @DisplayName("listOrders should return all available Orders")
+    public void testListOrders(){
+        //Given
+    }
+
 }

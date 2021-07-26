@@ -22,17 +22,22 @@ public class OrderService {
     public Order orderProducts(List<String> productIds) {
         List<Product> productsToOrder = new ArrayList<>();
         for (String productId : productIds) {
-            Optional<Product> optionalProduct = productDb.getProductById(productId);
-            if (optionalProduct.isPresent()) {
-                productsToOrder.add(optionalProduct.get());
-            } else {
-                throw new IllegalArgumentException("Product with ID " + productId + " does not exist");
-            }
+            Product productToAdd = getProduct(productId);
+            productsToOrder.add(productToAdd);
         }
         String id = UUID.randomUUID().toString();
         return orderDb.addOrder(new Order(id, productsToOrder));
     }
 
+    private Product getProduct(String productId) {
+        return productDb.getProductById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("Product with ID " + productId + " does not exist"));
+    }
+
+
+    public List<Order> listOrders() {
+        return null;
+    }
 
 
 }
