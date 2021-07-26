@@ -7,7 +7,6 @@ import de.neuefische.orderdb.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public class OrderService {
@@ -36,8 +35,7 @@ public class OrderService {
 
 
     public List<Order> listOrders() {
-        return null;
+        return orderDb.listOrders();
     }
-
 
 }

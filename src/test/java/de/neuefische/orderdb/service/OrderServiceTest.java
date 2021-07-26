@@ -64,8 +64,40 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("listOrders should return all available Orders")
-    public void testListOrders(){
+    public void testListOrders() {
         //Given
+        List<Product> products = List.of(
+                new Product("1", "beer"),
+                new Product("2", "apple"),
+                new Product("3", "tomato")
+        );
+        ProductDb productDb = new ProductDb(products);
+        OrderDb orderDb = new OrderDb();
+        orderDb.addOrder(new Order("1", List.of(
+                new Product("1", "beer"),
+                new Product("2", "apple")
+        )));
+        orderDb.addOrder(new Order("2", List.of(
+                new Product("2", "apple"),
+                new Product("3", "tomato")
+        )));
+        OrderService orderService = new OrderService(productDb, orderDb);
+
+        //When
+        List<Order> actual = orderService.listOrders();
+
+        //Then
+        List<Order> expected = List.of(
+                new Order("1", List.of(
+                        new Product("1", "beer"),
+                        new Product("2", "apple")
+                )),
+                new Order("2", List.of(
+                        new Product("2", "apple"),
+                        new Product("3", "tomato")
+                )));
+        assertEquals(expected, actual);
+
     }
 
 }
