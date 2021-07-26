@@ -61,7 +61,5 @@ class OrderDbTest {
                         new Product("1", "beer"),
                         new Product("2", "apple")
                 ))));
-
-
     }
 }
