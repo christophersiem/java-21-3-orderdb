@@ -15,7 +15,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("orderProducts returns new Order")
-    public void testOrderProducts(){
+    public void testOrderProducts() {
         //Given
         List<Product> products = List.of(
                 new Product("1", "beer"),
@@ -36,6 +36,30 @@ class OrderServiceTest {
         );
         assertEquals(expected, actual.getProducts());
         assertNotNull(actual.getId());
+    }
+
+    @Test
+    @DisplayName("order non existing Product should throw Exception")
+    public void orderNonExistingProduct() {
+        //Given
+        List<Product> products = List.of(
+                new Product("1", "beer"),
+                new Product("2", "apple"),
+                new Product("3", "tomato")
+        );
+        ProductDb productDb = new ProductDb(products);
+        OrderDb orderDb = new OrderDb();
+        OrderService orderService = new OrderService(productDb, orderDb);
+
+        try {
+            //When
+            orderService.orderProducts(List.of("4"));
+            fail();
+        } catch (IllegalArgumentException actual) {
+            //Then
+            assertEquals("Product with ID 4 does not exist", actual.getMessage());
+
+        }
     }
 
 }

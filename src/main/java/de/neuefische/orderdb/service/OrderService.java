@@ -25,11 +25,14 @@ public class OrderService {
             Optional<Product> optionalProduct = productDb.getProductById(productId);
             if (optionalProduct.isPresent()) {
                 productsToOrder.add(optionalProduct.get());
+            } else {
+                throw new IllegalArgumentException("Product with ID " + productId + " does not exist");
             }
         }
         String id = UUID.randomUUID().toString();
         return orderDb.addOrder(new Order(id, productsToOrder));
     }
+
 
 
 }
